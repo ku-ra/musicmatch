@@ -58,7 +58,7 @@ export const getProfileData = async (userId: number) => {
 }
 
 export const getById = async (userId: number) => {
-      return await Users.findByPk(userId, { attributes: ['userId', 'username', 'description', 'avatar'] }) as UsersInstance;
+      return await Users.findByPk(userId) as UsersInstance;
 }
 
 export const setAvatarById = async (userId: number, filePath: string) => {

@@ -4,6 +4,7 @@ import expressSession from 'express-session'
 import config from '../config/config.json';
 
 import * as Auth from './auth';
+import * as Analyse from './routes/analyse.route'
 
 const SpotifyStrategy = require('passport-spotify').Strategy;
 
@@ -34,7 +35,13 @@ app.get('/', (req, res) => {
 app.get(
       '/auth/spotify', 
       passport.authenticate('spotify', { 
-        scope: ['user-read-email', 'user-read-private', 'user-read-recently-played', 'user-follow-read', 'playlist-read-collaborative', 'playlist-read-private'],
+        scope: ['user-read-email', 
+                'user-read-private', 
+                'user-read-recently-played', 
+                'user-top-read',
+                'user-follow-read', 
+                'playlist-read-collaborative', 
+                'playlist-read-private'],
         showDialog: true
       } as any)
 );
@@ -43,8 +50,14 @@ app.get(
   '/auth/spotify/callback',
   passport.authenticate('spotify', { failureRedirect: 'http://localhost:3000/' }),
   function (req, res) {
-    res.redirect('/');
+    res.redirect('/analyze');
   }
+);
+
+app.get(
+  '/analyze', 
+  Auth.isAuthenticated,
+  Analyse.analyseUser,
 );
 
 export default app;

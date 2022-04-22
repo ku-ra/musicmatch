@@ -1,23 +1,25 @@
 import { Sequelize } from 'sequelize';
 
 import { Users } from './models/user.model';
-
+import { SpotifyData } from './models/spotifyData.model';
 
 const sequelize = new Sequelize('postgres://postgres:root@localhost:5432/musicmatch', { logging: false });
 
 const models = [
       Users,
+      SpotifyData
 ];
 
 models.forEach((model) => model(sequelize));
 
 (async () => {
-      await sequelize.sync({force: true});
+      await sequelize.sync();
+      //await sequelize.sync({force: true});
 })();
 
 
-//sequelize.models.Users.hasMany(sequelize.models.UserBadges, { foreignKey: 'userId' });
-//sequelize.models.Users.hasOne(sequelize.models.ActiveBadges, { foreignKey: 'userId' });
+sequelize.models.SpotifyData.belongsTo(sequelize.models.Users, { foreignKey: 'userId' });
+sequelize.models.Users.hasOne(sequelize.models.SpotifyData, { foreignKey: 'userId' });
 
 /*
  * User.sync() - This creates the table if it doesn't exist (and does nothing if it already exists)
