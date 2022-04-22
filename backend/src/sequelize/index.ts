@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize';
 import { Users } from './models/user.model';
 
 
-const sequelize = new Sequelize('postgres://jan:root@localhost:5432/dev', { logging: true });
+const sequelize = new Sequelize('postgres://jan:root@localhost:5432/dev', { logging: false });
 
 const models = [
       Users,

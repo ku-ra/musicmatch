@@ -1,58 +1,14 @@
-import path from 'path'
-import Multer from 'multer'
-import express from 'express'
-import passport from 'passport'
-import flash from 'connect-flash'
-import cookieParser from 'cookie-parser'
-import expressSession from 'express-session'
-import SpotifyStrategy from 'passport-spotify';
+import express from 'express';
+import cookieParser from 'cookie-parser';
+import expressSession from 'express-session';
 import cors from 'cors';
+import passport from 'passport';
+import OAuth2Strategy from 'passport-oauth2';
+
+import * as Users from './interfaces/user.interface';
 import config from '../config/config.json';
 
-import * as Auth from './auth';
-import * as FileUtils from '../utils/file.utils'
-
-import * as AuthRoutes from './routes/auth.route'
-import * as UserRoutes from './routes/user.route'
-
-
-const app = express();
-
-app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
-
-app.use(flash());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(cookieParser());
-app.use(expressSession({secret: 'cunny', resave: false, saveUninitialized: false}));
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use('/static', express.static(path.join(__dirname, '../../static')));
-
-console.log(config.CLIENT_ID);
-console.log(config.CLIENT_SECRET);
-
-passport.use(new SpotifyStrategy.Strategy({
-      clientID: config.CLIENT_ID,
-      clientSecret: config.CLIENT_SECRET,
-      callbackURL: config.CALLBACK_URL,
-      //userProfileURL: "https://api.spotify.com/v1/me",
-      scope: ['user-read-email', 'user-read-private', 'user-read-recently-played', 'user-follow-read', 'playlist-read-collaborative', 'playlist-read-private'],
-      showDialog: true,
-}, Auth.authenticate));
-
-passport.serializeUser(Auth.serialize);
-passport.deserializeUser(Auth.deserialize);
-
-app.get('/', (req, res) => {
-	res.send(`
-		
-      `);
-});
-
+require('https').globalAgent.options.rejectUnauthorized = false;
 
 const makeHandlerAwareOfAsyncErrors = (handler: express.RequestHandler) => {
 	return async (req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -64,55 +20,57 @@ const makeHandlerAwareOfAsyncErrors = (handler: express.RequestHandler) => {
 	};
 }
 
-//app.use(makeHandlerAwareOfAsyncErrors);
+passport.use(new OAuth2Strategy({
+      authorizationURL: 'https://accounts.spotify.com/authorize',
+      tokenURL: 'ttps://accounts.spotify.com/api/token',
+      clientID: config.CLIENT_ID,
+      clientSecret: config.CLIENT_SECRET,
+      callbackURL: "http://localhost:8001/auth/spotify/callback"
+      },
+      async function(accessToken: string, refreshToken: string, profile: any, cb: Function) {
+            console.log(accessToken);
+            const user = await Users.getBySpotifyId(profile.id);
 
-const storage = Multer.diskStorage({destination: FileUtils.destinationHandler, filename: FileUtils.fileHandler});
+            if (user) {
+                  return cb(null, user);
+            }
 
-const upload = Multer({ storage: storage, fileFilter: FileUtils.fileFilter, limits: { fileSize: (1 * 1024 * 1024 * 1024) }});
+            const registered = await Users.create({
+                  spotifyId: profile.id,
+                  username: profile.displayName,
+                  customname: profile.displayName,
+                  country: profile.country,
+                  token: refreshToken,
+                  attempts: 0,
+                  email: profile.emails?.[0].value,
+                  avatar: "",
+                  description: "No description provided.",
+            });
 
-//app.get('api/v1/login', passport.Strategy
+            return cb(null, registered);
+      }
+  ));
 
-app.get('/auth/spotify', passport.authenticate('spotify', { 
-            scope: ['user-read-email', 'user-read-private', 'user-read-recently-played', 'user-follow-read', 'playlist-read-collaborative', 'playlist-read-private', 'user-read-email', 'user-read-private', 'user-read-recently-played', 'user-follow-read', 'playlist-read-collaborative', 'playlist-read-private'],
-      })
-);
+const app = express();
 
-app.get(
-  '/auth/spotify/callback',
-  passport.authenticate('spotify', { failureRedirect: '/login' }),
+app.set('trust proxy', 1);
+
+app.use(cors({credentials: true, origin: 'http://localhost:3000'}));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
+app.use(expressSession({secret: 'cunny', resave: false, saveUninitialized: true}));
+
+app.get('/auth/spotify',
+  passport.authenticate('oauth2'));
+
+app.get('/auth/spotify/callback',
+  passport.authenticate('oauth2', { failureRedirect: '/login' }),
   function(req, res) {
+    // Successful authentication, redirect home.
     res.redirect('/');
-  }
-);
-
-
-app.post(
-      '/api/v1/accounts/logout',
-      Auth.authenticated,
-      makeHandlerAwareOfAsyncErrors(AuthRoutes.logout)
-);
-
-app.get(
-      `/api/v1/users/user/:username`,
-      makeHandlerAwareOfAsyncErrors(UserRoutes.getByUsername)
-);
-
-app.post(
-      `/api/v1/users/profile/:username`,
-      makeHandlerAwareOfAsyncErrors(UserRoutes.getProfileData)
-);
-
-
-app.post(
-      `/api/v1/users/exists/:username`,
-      makeHandlerAwareOfAsyncErrors(UserRoutes.isExists)
-);
-
-app.post(
-      `/api/v1/users/edit`,
-      Auth.authenticated,
-      makeHandlerAwareOfAsyncErrors(UserRoutes.update) 
-);
-
+  });
 
 export default app;
