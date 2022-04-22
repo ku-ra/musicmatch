@@ -1,0 +1,7 @@
+{ 
+      "HOST": "http://localhost:8001",
+      "FILEHOST": "http://localhost:8001",
+      "CLIENT_ID": "791def1c9862410d9437930e7400ad2c",
+      "CLIENT_SECRET": "eb9a5ab34a51454095f23e9808900e33",
+      "CALLBACK_URL":  "http://localhost:8001/auth/spotify/callback"
+}
