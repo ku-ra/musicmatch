@@ -1,16 +1,23 @@
 import { Sequelize, DataTypes, Optional, Model } from 'sequelize';
 
 interface UsersAttributes {
+      //Userdata
       userId: number,
-      spotifyId: string,
-      token: string,
       username: string,
-      customname: string,
-      country: string,
-      attempts: number,
       email: string,
       avatar: string,
       description: string,
+      customname: string,
+      country: string,
+
+      //Spotify Integration
+      spotifyId: string,
+      spotifyAccessToken: string,
+      spotifyRefreshToken: string,
+      spotifyUrl: string,
+
+      //Login Attempts
+      attempts: number,
       lastAttempt: Date,
 }
 
@@ -28,33 +35,12 @@ const Users = (sequelize: Sequelize) => { sequelize.define<UsersInstance>('Users
             autoIncrement: true,
             allowNull: false,
       },
-      spotifyId: {
-            type: DataTypes.STRING(256),
-            unique: true,
-            allowNull: false,
-      },
       username: {
             type: DataTypes.STRING(128),
             allowNull: false,
       },
       customname: {
-            type: DataTypes.STRING(20),
-            allowNull: false,
-            defaultValue: ''
-      },
-      country: {
-            type: DataTypes.STRING(8),
-            allowNull: true,
-            defaultValue: ''
-      },
-      token: {
-            type: DataTypes.STRING(256),
-            allowNull: false,
-      },
-      attempts: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0,
+            type: DataTypes.STRING(128),
       },
       email: {
             type: DataTypes.STRING(64),
@@ -69,6 +55,32 @@ const Users = (sequelize: Sequelize) => { sequelize.define<UsersInstance>('Users
       description: {
             type: DataTypes.STRING(256),
             defaultValue: '',
+      },
+      country: {
+            type: DataTypes.STRING(8),
+            allowNull: true,
+            defaultValue: ''
+      },
+      spotifyId: {
+            type: DataTypes.STRING(256),
+            unique: true,
+      },
+      spotifyAccessToken: {
+            type: DataTypes.STRING(256),
+            unique: true,
+      },
+      spotifyRefreshToken: {
+            type: DataTypes.STRING(256),
+            unique: true,
+      },
+      spotifyUrl: {
+            type: DataTypes.STRING(256),
+            unique: true,
+      },
+      attempts: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
       },
       lastAttempt: {
             type: DataTypes.DATE,

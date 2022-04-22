@@ -23,16 +23,21 @@ export const authenticateUser = async (accessToken: string, refreshToken: string
             }
             
             else {
+
                   await Users.create({
-                        spotifyId: profile.id,
                         username: profile.displayName,
                         customname: profile.displayName,
                         country: profile.country,
-                        token: refreshToken,
-                        attempts: 0,
                         email: profile.emails?.[0].value,
-                        avatar: "",
+                        avatar: (profile.photos as unknown as [{ value: string }])[0].value, //Type Fix
                         description: "No description provided.",
+
+                        spotifyId: profile.id,
+                        spotifyAccessToken: accessToken,
+                        spotifyRefreshToken: refreshToken,
+                        spotifyUrl: profile.profileUrl,
+
+                        attempts: 0,
                   });
 
                   const newUser = await Users.getBySpotifyId(profile.id);
