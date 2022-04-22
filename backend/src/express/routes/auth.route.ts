@@ -7,7 +7,6 @@ import * as Crypto from '../../crypto/crypto';
 
 import { getStaticPath, removeFromPath } from '../../utils/file.utils';
 
-import { getNewToken, getUserData, getUserId } from '../spotify-api/userinfo';
 
 export const logout = async (req: Request, res: Response) => {
       req.session.destroy(function (err) {

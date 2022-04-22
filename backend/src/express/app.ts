@@ -50,14 +50,21 @@ app.get(
   '/auth/spotify/callback',
   passport.authenticate('spotify', { failureRedirect: 'http://localhost:3000/' }),
   function (req, res) {
-    res.redirect('/analyze');
+    res.redirect('/analyse/collect');
   }
 );
 
 app.get(
-  '/analyze', 
+  '/analyse/collect', 
   Auth.isAuthenticated,
   Analyse.analyseUser,
 );
+
+app.get(
+  '/analyse/match', 
+  Auth.isAuthenticated,
+  Analyse.matchUser,
+);
+
 
 export default app;

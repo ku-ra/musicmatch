@@ -1,3 +1,5 @@
+import moment from "moment";
+
 import { Request, Response } from "express";
 import { analyseData } from "../spotify-api/analyseData";
 
@@ -5,8 +7,17 @@ import * as Users from '../interfaces/user.interface'
 import * as SpotifyData from '../interfaces/spotifyData.interface'
 
 import { refreshToken } from "../spotify-api/handleTokens";
-import { getUserId } from "../spotify-api/userinfo";
-import moment from "moment";
+import { findMatches } from "../spotify-api/matchAlgorithm";
+
+export const matchUser = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.sendStatus(403);
+    }
+
+    const matches = await findMatches(req.user.userId);
+
+    return res.status(200).json(matches);
+}
 
 export const analyseUser = async (req: Request, res: Response) => {
     if (!req.user) {

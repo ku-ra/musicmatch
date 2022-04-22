@@ -3,9 +3,9 @@ import { Sequelize, DataTypes, Optional, Model } from 'sequelize';
 interface SpotifyDataAttributes {
       id: number,
       userId: number,
-      artists: string,
-      genres: string,
-      tracks: string,
+      artists: string[],
+      genres: string[],
+      tracks: string[],
 }
 
 interface SpotifyDataCreationAttributes extends Optional<SpotifyDataAttributes, 'userId'> {}
