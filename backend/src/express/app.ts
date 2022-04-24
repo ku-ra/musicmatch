@@ -3,20 +3,20 @@ import passport from 'passport'
 import expressSession from 'express-session'
 import config from '../config/config.json';
 
-import * as Auth from './auth';
+import * as Spotify from './integrations/spotify';
 import * as Analyse from './routes/analyse.route'
 
 const SpotifyStrategy = require('passport-spotify').Strategy;
 
-passport.serializeUser(Auth.serializeUser);
-passport.deserializeUser(Auth.deserializeUser);
+passport.serializeUser(SpotifyAuth.serializeUser);
+passport.deserializeUser(SpotifyAuth.deserializeUser);
 
 passport.use(new SpotifyStrategy({
       clientID: config.CLIENT_ID,
       clientSecret: config.CLIENT_SECRET,
       callbackURL: config.CALLBACK_URL,
       showDialog: true,
-}, Auth.authenticateUser));
+}, Spotify.authenticateUser));
 
 
 const app = express();
@@ -56,14 +56,26 @@ app.get(
 
 app.get(
   '/analyse/collect', 
-  Auth.isAuthenticated,
+  Spotify.isAuthenticated,
   Analyse.analyseUser,
 );
 
 app.get(
   '/analyse/match', 
-  Auth.isAuthenticated,
+  Spotify.isAuthenticated,
   Analyse.matchUser,
+);
+
+app.get(
+  '/analyse/get', 
+  Spotify.isAuthenticated,
+  Analyse.showMatches,
+);
+
+app.post(
+  '/analyse/seen', 
+  Spotify.isAuthenticated,
+  Analyse.seenMatch,
 );
 
 

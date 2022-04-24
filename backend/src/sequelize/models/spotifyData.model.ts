@@ -8,7 +8,7 @@ interface SpotifyDataAttributes {
       tracks: string[],
 }
 
-interface SpotifyDataCreationAttributes extends Optional<SpotifyDataAttributes, 'userId'> {}
+interface SpotifyDataCreationAttributes extends Optional<SpotifyDataAttributes, 'id'> {}
 
 interface SpotifyDataInstance extends Model<SpotifyDataAttributes, SpotifyDataCreationAttributes>, SpotifyDataAttributes {
       createdAt?: Date;

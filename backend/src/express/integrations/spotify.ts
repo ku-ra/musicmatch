@@ -1,4 +1,4 @@
-import * as Users from './interfaces/user.interface'
+import * as Users from '../interfaces/user.interface'
 
 import SpotifyStrategy from 'passport-spotify';
 

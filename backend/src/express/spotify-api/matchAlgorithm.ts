@@ -8,18 +8,13 @@ export type Match = {
 
 export type MatchInfo = {
     matchUserId: number,
-    matchUserInfo?: UserInfo,
+    infoArtists: string[],
+    infoGenres: string[],
+    infoTracks: string[],
     matchGenre: number,
     matchArtist: number,
     matchTrack: number,
     matchOverall: number,
-}
-
-export type UserInfo = {
-    username: string,
-    avatar: string,
-    country: string,
-    spotifyUrl: string,
 }
 
 
@@ -50,10 +45,7 @@ export const findMatches = async (userId: number) => {
 
         const matchOverall = +(matchGenre * 0.45 + matchArtist * 0.45 + matchTrack * 0.1).toFixed(2);
 
-        const user = await Users.getById(data.userId);
-
-        matches.matches.push({ matchUserId: data.userId, matchUserInfo: { avatar: user.avatar, country: user.country, spotifyUrl: user.spotifyUrl, username: user.username }, matchGenre: matchGenre, matchArtist: matchArtist, matchTrack: matchArtist, matchOverall: matchOverall });
- 
+        matches.matches.push({ matchUserId: data.userId, infoArtists: artists, infoGenres: genres, infoTracks: tracks, matchGenre: matchGenre, matchArtist: matchArtist, matchTrack: matchTrack, matchOverall: matchOverall });
     }
 
     return matches;
