@@ -8,8 +8,8 @@ import * as Analyse from './routes/analyse.route'
 
 const SpotifyStrategy = require('passport-spotify').Strategy;
 
-passport.serializeUser(SpotifyAuth.serializeUser);
-passport.deserializeUser(SpotifyAuth.deserializeUser);
+passport.serializeUser(Spotify.serializeUser);
+passport.deserializeUser(Spotify.deserializeUser);
 
 passport.use(new SpotifyStrategy({
       clientID: config.CLIENT_ID,
