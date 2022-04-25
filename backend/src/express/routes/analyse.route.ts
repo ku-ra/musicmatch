@@ -6,6 +6,7 @@ import { analyseData } from "../spotify-api/analyseData";
 import * as Users from '../interfaces/user.interface'
 import * as SpotifyData from '../interfaces/spotifyData.interface'
 import * as Matches from '../interfaces/match.interface'
+import * as Utils from '../../utils/utils'
 
 import { refreshToken } from "../spotify-api/handleTokens";
 import { findMatches } from "../spotify-api/matchAlgorithm";
@@ -15,6 +16,10 @@ export const showMatches = async (req: Request, res: Response) => {
         return res.sendStatus(403);
     }
 
+    if (!Utils.containsKeys(req.body, ['page'])) {
+        return res.sendStatus(400);
+    }
+    
     const limit = 10;
     const offset = req.body.page ? req.body.page * limit : 0;
     const matches = await Matches.getByFirstUserIdUserInfo(req.user.userId, limit, offset);

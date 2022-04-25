@@ -75,7 +75,7 @@ const Matches = (sequelize: Sequelize) => { sequelize.define<MatchInstance>('Mat
     },
     seen: {
         type: DataTypes.BOOLEAN,
-        defaultValue: 0,
+        defaultValue: false,
     }
 }, {
     indexes: [

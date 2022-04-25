@@ -18,6 +18,7 @@ export const getByFirstUserIdDetailed = async (userId: number) => {
 }
 
 export const getByFirstUserIdUserInfo = async (userId: number, limit: number, offset: number) => {
+    console.log(limit, offset)
     return await Matches.findAll({ 
         attributes: ['secondUserId', 'scoreAverage', 'scoreArtist', 'scoreGenre', 'scoreTrack', 'updatedAt'], 
         where: { firstUserId: userId },

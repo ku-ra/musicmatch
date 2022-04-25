@@ -3,13 +3,15 @@ import { Sequelize } from 'sequelize';
 import { Users } from './models/user.model';
 import { SpotifyData } from './models/spotifyData.model';
 import { Matches } from './models/match.model';
+import { Discords } from './models/discord.model';
 
-const sequelize = new Sequelize('postgres://postgres:root@localhost:5432/musicmatch', { logging: false });
+const sequelize = new Sequelize('postgres://jan:root@localhost:5432/dev', { logging: false });
 
 const models = [
       Users,
       SpotifyData,
       Matches,
+      Discords
 ];
 
 models.forEach((model) => model(sequelize));
@@ -28,6 +30,8 @@ sequelize.models.Users.hasMany(sequelize.models.Matches, { foreignKey: 'secondUs
 
 sequelize.models.Matches.belongsTo(sequelize.models.Users, { foreignKey: 'firstUserId' });
 sequelize.models.Matches.belongsTo(sequelize.models.Users, { foreignKey: 'secondUserId' });
+
+sequelize.models.Discords.belongsTo(sequelize.models.Users, { foreignKey: 'userId' });
 /*
  * User.sync() - This creates the table if it doesn't exist (and does nothing if it already exists)
  * User.sync({ force: true }) - This creates the table, dropping it first if it already existed

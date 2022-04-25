@@ -1,7 +1,16 @@
 { 
+      "HOME": "http://localhost:3000",
       "HOST": "http://localhost:8001",
       "FILEHOST": "http://localhost:8001",
-      "CLIENT_ID": "791def1c9862410d9437930e7400ad2c",
-      "CLIENT_SECRET": "eb9a5ab34a51454095f23e9808900e33",
-      "CALLBACK_URL": "http://localhost:8001/auth/spotify/callback"
+      "SPOTIFY": {
+            "CLIENT_ID": "791def1c9862410d9437930e7400ad2c",
+            "CLIENT_SECRET": "eb9a5ab34a51454095f23e9808900e33",
+            "CALLBACK_URL": "http://localhost:8001/auth/spotify/callback"
+      },
+      "DISCORD": {
+            "CLIENT_ID": "968047895163068447",
+            "CLIENT_SECRET": "j391JGpTSdcV-TXqGmvAQ6tdf0iKklIS",
+            "CALLBACK_URL": "http://localhost:8001/auth/discord/callback"
+      }
+      
 }
