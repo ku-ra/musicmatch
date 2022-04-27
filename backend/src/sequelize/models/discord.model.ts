@@ -7,7 +7,9 @@ interface DiscordAttributes {
     accessToken: string,
     refreshToken: string,
     scope: string,
-    expiresIn: number
+    expiresIn: number,
+    username: string,
+    discriminator: number
 }
 
 interface DiscordCreationAttributes extends Optional<DiscordAttributes, 'discordId'> {}
@@ -45,6 +47,14 @@ const Discords = (sequelize: Sequelize) => { sequelize.define<DiscordInstance>('
     },
     expiresIn: {
         type: DataTypes.INTEGER,
+        allowNull: false,
+    },
+    username: {
+        type: DataTypes.STRING(64),
+        allowNull: false
+    },
+    discriminator: {
+        type: DataTypes.STRING(4),
         allowNull: false,
     }
 }, {

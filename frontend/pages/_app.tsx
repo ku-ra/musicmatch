@@ -1,6 +1,6 @@
 import '../styles/globals.css'
 
-import { userContext } from '../context/userContext'
+import { UserContext, userContext } from '../context/userContext'
 
 import type { AppProps } from 'next/app'
 import { useEffect, useState } from 'react'
@@ -9,13 +9,13 @@ import { is_auth_api } from '../constants/routes';
 
 function MyApp({ Component, pageProps }: AppProps) {
 
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState<UserContext>({user: "", hasDiscord: false});
 
   const fetchUser = async () => {
-    const response = await Client.get(is_auth_api).catch((error) => { setUser("") });
+    const response = await Client.get(is_auth_api).catch((error) => { setUser({user: "", hasDiscord: false}) });
 
     if (response && response.status === 200) {
-      setUser(response.data.userId);
+      setUser({user: response.data.userId, hasDiscord: response.data.hasDiscord});
     }
   }
 
@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [])
 
   return (
-    <userContext.Provider value={{user: user}}>
+    <userContext.Provider value={user}>
       <Component {...pageProps} />
     </userContext.Provider> 
   )

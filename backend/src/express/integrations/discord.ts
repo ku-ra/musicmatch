@@ -1,8 +1,8 @@
 import DiscordOauth2 from "discord-oauth2";
 import { Request, Response } from "express";
-import * as Discords from "../interfaces/discord.interface";
 
 import config from '../../config/config.json'
+import axios from "axios";
 
 const oauth = new DiscordOauth2({
     clientId: config.DISCORD.CLIENT_ID,
@@ -10,21 +10,11 @@ const oauth = new DiscordOauth2({
     redirectUri: config.DISCORD.CALLBACK_URL,
 })
 
-export const connect = async (req: Request, res: Response) => {
-    return res.redirect(oauth.generateAuthUrl({ responseType: "code", prompt: "consent", scope: "identify" }));
+export const getAuthUrl = () => {
+    return oauth.generateAuthUrl({ responseType: "code", prompt: "consent", scope: "identify" });
 }
 
-export const callback = async (req: Request, res: Response) => {
-    if (!req.user) {
-        return res.sendStatus(403);
-    }
-
-    if (!req.query.code) {
-        return res.sendStatus(400);
-    }
-
-    const code = req.query.code.toString();
-
+export const getToken = async (code: string) => {
     const response = await oauth.tokenRequest({
         code: code,
         scope: "identify",
@@ -32,15 +22,32 @@ export const callback = async (req: Request, res: Response) => {
     }).catch(error => { console.log(error) });
 
     if (response) {
-
-        const connected = await Discords.create(req.user.userId, response.access_token, response.refresh_token, response.expires_in, response.scope).catch(error => { console.log(error); });
-
-        if (!connected) {
-            return res.status(500).redirect(config.HOME);
-        }
-
-        return res.status(200).redirect(config.HOME);
+        return response;
     }
 
-    return res.status(500).redirect(config.HOME);
+    return null;
+}
+
+export const getUserData = async (accessToken: string) => {
+    const data = await oauth.getUser(accessToken).catch(error => { console.log(error) });
+
+    if (data) {
+        return data;
+    }
+
+    return null;
+}
+
+export const refreshToken = async (refreshToken: string) => {
+    const token = await oauth.tokenRequest({
+        scope: 'identify',
+        grantType: "refresh_token",
+        refreshToken: refreshToken,
+    }).catch(error => { console.log(error) });
+
+    if (token) {
+        return token.access_token;
+    }
+
+    return null;
 }

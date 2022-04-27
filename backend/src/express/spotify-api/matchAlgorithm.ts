@@ -45,6 +45,8 @@ export const findMatches = async (userId: number) => {
 
         const matchOverall = +(matchGenre * 0.45 + matchArtist * 0.45 + matchTrack * 0.1).toFixed(2);
 
+        console.log(genres);
+
         matches.matches.push({ matchUserId: data.userId, infoArtists: artists, infoGenres: genres, infoTracks: tracks, matchGenre: matchGenre, matchArtist: matchArtist, matchTrack: matchTrack, matchOverall: matchOverall });
     }
 

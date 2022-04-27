@@ -16,15 +16,14 @@ const extractAllListenedTracks = async (spotifyHandler: SpotifyWebApi) => {
 
 export const favoriteArtists = async (accessToken: string, limit: number) => {
     const spotifyHandler = SpotifyHandler(accessToken);
-    console.log(spotifyHandler);
     const topArtists = await spotifyHandler.getMyTopArtists({limit: limit});
-    return topArtists.body.items.map((artist) => { return artist.name })
+    return topArtists.body.items.map((artist) => { return artist.id })
 }
 
 export const favoriteTracks = async (accessToken: string, limit: number) => {
     const spotifyHandler = SpotifyHandler(accessToken);
     const topTracks = await spotifyHandler.getMyTopTracks({limit: limit});
-    return topTracks.body.items.map((track) => { return track.name })
+    return topTracks.body.items.map((track) => { return track.id })
 }
 
 export const favoriteGenres = async (accessToken: string, limit: number) => {

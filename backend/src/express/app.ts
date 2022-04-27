@@ -4,8 +4,9 @@ import expressSession from 'express-session'
 import config from '../config/config.json';
 
 import * as Spotify from './integrations/spotify';
-import * as Discord from './integrations/discord';
-import * as Analyse from './routes/analyse.route'
+import * as Discord from './routes/discord.route';
+import * as Analyse from './routes/analyse.route';
+import * as Discords from './interfaces/discord.interface';
 
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -68,9 +69,10 @@ app.get(
 
 app.get(
   '/auth',
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     if (req.user) {
-      return res.status(200).json({ message: 'success', id: req.user.userId });
+      const hasDiscord = (await Discords.getAccessTokenByUserId(req.user.userId)) != null;
+      return res.status(200).json({ message: 'success', id: req.user.userId, hasDiscord: hasDiscord});
     }
 
     return res.status(400).json({ message: 'failed', id: null });
@@ -111,6 +113,5 @@ app.post(
   Spotify.isAuthenticated,
   Analyse.seenMatch,
 );
-
 
 export default app;
