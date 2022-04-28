@@ -42,7 +42,7 @@ const Home: NextPage = () => {
       </div>
     )
   }
-/*
+
   return (
     <div className="w-screen h-screen flex ">
       <div className="w-full h-full flex flex-col justify-center items-center space-y-36">
@@ -60,14 +60,16 @@ const Home: NextPage = () => {
         </div>
       </div>
     </div>
-  )*/
+  )
 
   return (
     <div className="w-screen h-screen flex p-8 bg-slate-100">
       <div className="w-full h-full flex flex-col justify-center items-center space-y-36">
         {
           matches.map((match) => {
-            return <MatchDetail key={match.secondUserId} updatedAt={match.updatedAt} secondUserId={match.secondUserId} scoreTrack={match.scoreTrack} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre} scoreArtist={match.scoreArtist} MatchArtists={match.MatchArtists} MatchTracks={match.MatchTracks} User={match.User}></MatchDetail>
+            return (
+              <MatchDetail key={match.secondUserId} updatedAt={match.updatedAt} secondUserId={match.secondUserId} scoreTrack={match.scoreTrack} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre} scoreArtist={match.scoreArtist} MatchArtists={match.MatchArtists} MatchTracks={match.MatchTracks} User={match.User}></MatchDetail>
+            )
           })
         }
      </div>
