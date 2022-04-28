@@ -20,7 +20,7 @@ export const convertCountry = (code: string) => {
     return name;
 }
 
-const User = ({ avatar, country, spotifyUrl, username }: UserInfo) => {
+const UserView = ({ avatar, country, spotifyUrl, username }: UserInfo) => {
     return ( 
         <>
                <div className="w-20 h-20">
@@ -40,4 +40,4 @@ const User = ({ avatar, country, spotifyUrl, username }: UserInfo) => {
     )
 }
 
-export default User;
+export default UserView;

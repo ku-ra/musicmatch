@@ -50,7 +50,7 @@ const MatchDetail = ({secondUserId, scoreAverage, User, MatchTracks, MatchArtist
     return ( <> 
         { showDetails &&  (
             <div onClick={onClick}>
-                <div className="absolute w-full h-full bg-black top-0 left-0 opacity-40 z-40">
+                <div className="absolute w-full h-full bg-black top-0 left-0 opacity-10 z-40">
                 </div>
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 h-5/6 z-50 bg-white rounded-xl drop-shadow-md px-10 py-10 space-y-6 flex flex-col items-center overflow-y-scroll" key={secondUserId}>
                     <div className="w-full flex flex-row space-x-2 items-center justify-center">
