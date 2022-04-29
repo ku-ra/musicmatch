@@ -5,6 +5,7 @@ import config from '../config/config.json';
 
 import * as Spotify from './integrations/spotify';
 import * as Discord from './routes/discord.route';
+import * as Data from './routes/data.route';
 import * as Analyse from './routes/analyse.route';
 import * as Discords from './interfaces/discord.interface';
 
@@ -112,6 +113,12 @@ app.post(
   '/analyse/seen', 
   Spotify.isAuthenticated,
   Analyse.seenMatch,
+);
+
+app.get(
+  '/data/artists', 
+  Spotify.isAuthenticated,
+  Data.getArtists,
 );
 
 export default app;

@@ -28,10 +28,10 @@ const UserView = ({ avatar, country, spotifyUrl, username }: UserInfo) => {
                 </div>
                 <div className="flex flex-col space-y-3">
                     <div>
-                        <h1 className="font-bold text-sm">{username}</h1>
-                        <p className="font-normal text-sm">{convertCountry(country)}</p>
+                        <h1 className="font-bold text-md">{username}</h1>
+                        <p className="font-normal text-xs">{convertCountry(country)}</p>
                     </div>
-                    <div className="flex flex-row w-full space-x-2 items-center">
+                    <div className="flex flex-row w-full space-x-2 items-center justify-center">
                         <FaDiscord size={17} color='#5865F2'></FaDiscord>
                         <FaInstagram size={17} color='#833AB4'></FaInstagram>
                     </div>

@@ -50,7 +50,28 @@ const Match = () => {
                                                                 <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
                                         scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
                                         scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                        </>
+                            <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
+                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
+                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
+                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
+                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
+                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
+                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
+                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
+                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
+                            <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
+                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
+                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
+                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
+                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
+                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
+                            <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
+                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
+                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
+                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
+                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
+                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
+                            </>
                     )
                 })
             }

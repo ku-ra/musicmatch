@@ -7,6 +7,7 @@ import Match from '../components/match'
 import DiscordAuth from '../components/authDiscord'
 import MatchDetail, { MatchData } from '../components/matchDetail'
 import { useEffect, useState } from 'react'
+import Search from '../components/search'
 
 const Home: NextPage = () => {
   const [page, setPage] = useState(0);
@@ -44,8 +45,8 @@ const Home: NextPage = () => {
   }
 
   return (
-    <div className="w-screen h-screen flex ">
-      <div className="w-full h-full flex flex-col justify-center items-center space-y-36">
+    <div className="flex p-8">
+      <div className="w-full h-full flex flex-col justify-center items-center">
         <div>
           <h1 className="text-4xl font-bold bg-gradient-to-r bg-clip-text text-transparent from-purple-500 to-pink-500">
             musicmatch.io
@@ -56,7 +57,10 @@ const Home: NextPage = () => {
           <div className="w-full py-4 text-center">
             {!hasDiscord() && <DiscordAuth></DiscordAuth>}
           </div>
-          <Match></Match>
+          <Search></Search>
+          <div className="grid grid-cols-3 gap-8 p-4 ">
+            <Match></Match>
+          </div>
         </div>
       </div>
     </div>
