@@ -28,13 +28,13 @@ const SpotifyData = (sequelize: Sequelize) => { sequelize.define<SpotifyDataInst
         onDelete: 'cascade',
     },
     artists: {
-        type: DataTypes.JSON
+        type: DataTypes.JSONB
     },
     genres: {
-        type: DataTypes.JSON
+        type: DataTypes.JSONB
     },
     tracks: {
-        type: DataTypes.JSON
+        type: DataTypes.JSONB
     }
 }, {
   // Other model options go here

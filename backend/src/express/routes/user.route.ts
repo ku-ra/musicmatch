@@ -42,22 +42,6 @@ export const getByUsername = async (req: Request, res: Response) => {
       }
 } 
 
-export const getProfileData = async (req: Request, res: Response) => {
-      const user = await Users.getByUsernameId(req.params.username);
-
-      if (user) {
-            const profile = await Users.getProfileData(user.userId);
-
-            if (profile) {
-                  res.status(200).json(profile);
-            } else {
-                  res.sendStatus(404);
-            }
-      } else {
-            res.sendStatus(404);
-      }
-}
-
 export const remove = async (req: Request, res: Response) => {
       const id = Utils.parseId(req);
 
@@ -72,31 +56,4 @@ export const remove = async (req: Request, res: Response) => {
       } else {
             res.sendStatus(400);
       }
-}
-
-export const update = async (req: Request, res: Response) => {
-      if (!req.user) {
-            return res.sendStatus(404);
-      }
-
-      const id = req.user.userId;
-      if (req.body.description) {
-            if (await Users.updateDescriptionById(req.body.description, id) == 0) {
-                  return res.sendStatus(400);
-            }
-      }
-
-      if (req.body.customname) {
-            if (await Users.updateCustomNameById(req.body.description, id) == 0) {
-                  return res.sendStatus(400);
-            }
-      }
-
-      if (req.body.email) {
-            if (await Users.updateEmailById(req.body.description, id) == 0) {
-                  return res.sendStatus(400);
-            }
-      }
-
-      return res.sendStatus(200);
 }

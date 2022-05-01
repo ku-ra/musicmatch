@@ -121,4 +121,10 @@ app.get(
   Data.getArtists,
 );
 
+app.post(
+  '/analyse/artist/users', 
+  Spotify.isAuthenticated,
+  Analyse.getUsersByArtist,
+);
+
 export default app;

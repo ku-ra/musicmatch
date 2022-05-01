@@ -18,6 +18,24 @@ import { clientToken, refreshToken } from "../spotify-api/handleTokens";
 import { findMatches } from "../spotify-api/matchAlgorithm";
 import { getArtists, getTracks } from "../spotify-api/requestData";
 
+export const getUsersByArtist = async (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.sendStatus(403);
+    }
+
+    if (!Utils.containsKeys(req.body, ['artistId'])) {
+        return res.sendStatus(400);
+    }
+
+    const users = await SpotifyData.getUsersByArtist(req.body.artistId);
+
+    if (!users) {
+        return res.sendStatus(500);
+    }
+
+    return res.status(200).json(users);
+} 
+
 export const showMatches = async (req: Request, res: Response) => {
     if (!req.user) {
         return res.sendStatus(403);

@@ -1,6 +1,6 @@
 import sequelize from '../../sequelize'
 
-import { Order, Sequelize } from 'sequelize'
+import { Op, Order, Sequelize } from 'sequelize'
 import { SpotifyDataInstance } from '../../sequelize/models/spotifyData.model';
 
 const SpotifyData = sequelize.models.SpotifyData;
@@ -15,6 +15,18 @@ export const getByUserId = async (userId: number) => {
 
 export const getInfoByUserId = async (userId: number) => {
     return await SpotifyData.findOne({ attributes: ['userId', 'genres', 'tracks', 'artists'], where: { userId: userId }} ) as SpotifyDataInstance;
+}
+
+export const getUsersByArtist = async (artistId: string) => {
+    return await SpotifyData.findAll({
+        where: { artists: { [Op.contains]: artistId }},
+        attributes: [],
+        include: [
+            { 
+                model: sequelize.models.Users, attributes: ['avatar', 'country', 'username', 'spotifyUrl'], 
+            },
+        ]
+    })
 }
 
 

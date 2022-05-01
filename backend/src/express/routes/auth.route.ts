@@ -14,21 +14,3 @@ export const logout = async (req: Request, res: Response) => {
             res.redirect('/'); 
       });
 }
-
-export const register = async (req: Request, res: Response) => {
-      //Validate Request Parameters
-      if (!Utils.containsKeys(req.body, ['username', 'password', 'email', 'description'])) {
-            return res.sendStatus(400);
-      }
-
-      Users.register({ username: req.body.username, 
-                        password: Crypto.hash(req.body.password), 
-                        email: req.body.email, 
-                        description: req.body.description })
-      .then((user) => {
-            res.sendStatus(201);
-      })
-      .catch((error) => {
-            res.sendStatus(500);
-      })
-}

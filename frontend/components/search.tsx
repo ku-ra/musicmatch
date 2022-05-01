@@ -1,12 +1,13 @@
 import { FetchEvent } from 'next/dist/server/web/spec-compliant/fetch-event'
 import { Router, useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 import Client from '../client/axios'
 import { data_artists_api } from '../constants/routes'
+import { searchContext } from '../context/searchContext'
 import { RoundedImageSmall } from './roundedImage'
 
-type SearchData = {
+export type SearchData = {
     artistId: string,
     name: string,
     image: string,
@@ -15,7 +16,8 @@ type SearchData = {
 
 const Search = () => {
     const router = useRouter();
-    const [data, setData] = useState<SearchData[]>()
+    const [data, setData] = useState<SearchData[]>();
+    const {info, setInfo} = useContext(searchContext);
     
     const fetchArtists = async () => {
         const response = await Client.get<SearchData[]>(data_artists_api).catch(error => { console.log(error) });
@@ -38,7 +40,9 @@ const Search = () => {
     }
 
     const handleOnSelect = (item: SearchData) => {
-        router.push({pathname: '/artist' });
+        setInfo(item);
+        console.log(info);
+        router.push({ pathname: '/search' });
     }
 
     const handleOnFocus = () => {
@@ -46,7 +50,6 @@ const Search = () => {
     }
 
     const formatResult = (item: SearchData) => {
-        console.log(item);
         return (
           <div className="flex flex-row items-center space-x-4 p-2">
             <RoundedImageSmall source={item.image}></RoundedImageSmall>
@@ -73,6 +76,7 @@ const Search = () => {
                 placeholder="Search for an artist, track, genre"
                 fuseOptions={{ keys: ["name"], shouldSort: true, minMatchCharLength: 1, threshold: 0.2 }}
                 resultStringKeyName="name"
+                key="searchBarUnique"
             />
             {/*<div className="w-full text-center">
                 <input className="rounded-md w-4/5 px-4 py-2 bg-white border-[1px] focus:outline-none focus:bg-white focus:border-purple-500" placeholder="Search for an artist, track, genre"></input>
