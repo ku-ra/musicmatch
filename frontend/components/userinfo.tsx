@@ -4,10 +4,18 @@ import { FaDiscord, FaInstagram } from 'react-icons/fa';
 
 
 export type UserInfo = {
+    Discord?: DiscordInfo,
     avatar: string,
     country: string,
     spotifyUrl: string,
     username: string,
+    hasDiscord?: boolean,
+    hasInstagram?: boolean
+}
+
+export type DiscordInfo = {
+    username: string,
+    discriminator: string,
 }
 
 export const convertCountry = (code: string) => {
@@ -20,7 +28,7 @@ export const convertCountry = (code: string) => {
     return name;
 }
 
-const UserView = ({ avatar, country, spotifyUrl, username }: UserInfo) => {
+const UserView = ({ avatar, country, spotifyUrl, username, hasDiscord, hasInstagram }: UserInfo) => {
     return ( 
         <>
                <div className="w-20 h-20">
@@ -32,8 +40,8 @@ const UserView = ({ avatar, country, spotifyUrl, username }: UserInfo) => {
                         <p className="font-normal text-xs">{convertCountry(country)}</p>
                     </div>
                     <div className="flex flex-row w-full space-x-2 items-center justify-center">
-                        <FaDiscord size={17} color='#5865F2'></FaDiscord>
-                        <FaInstagram size={17} color='#833AB4'></FaInstagram>
+                        { hasDiscord && <FaDiscord size={17} color='#5865F2'></FaDiscord> }
+                        { hasInstagram && <FaInstagram size={17} color='#833AB4'></FaInstagram> }
                     </div>
                 </div>
         </>

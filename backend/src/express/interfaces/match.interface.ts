@@ -28,7 +28,12 @@ export const getByFirstUserIdUserInfo = async (userId: number, limit: number, of
         where: { firstUserId: userId },
         include: [
             { 
-                model: sequelize.models.Users, attributes: ['avatar', 'country', 'username', 'spotifyUrl'], 
+                model: sequelize.models.Users, attributes: ['avatar', 'country', 'username', 'spotifyUrl'],
+                include: [
+                    {
+                        model: sequelize.models.Discords, attributes: ['username', 'discriminator']
+                    }
+                ]
             },
             {
                 model: sequelize.models.MatchTracks,

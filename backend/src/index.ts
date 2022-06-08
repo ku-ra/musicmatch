@@ -1,4 +1,5 @@
 import App from './express/app'
+import setupWorker from './express/workers/worker';
 import Database from './sequelize'
 
 const PORT = 8001
@@ -18,6 +19,7 @@ const init = async () => {
       .then(() => {
             App.listen(PORT, () => {
                   console.log(`Express server started on port ${PORT}`);
+                  setupWorker();
             })
       });
 }

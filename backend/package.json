@@ -13,6 +13,7 @@
   "dependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/moment": "^2.13.0",
+    "@types/node-cron": "^3.0.1",
     "@types/passport-oauth2": "^1.4.11",
     "@types/passport-spotify": "^2.0.1",
     "@types/spotify-web-api-node": "^5.0.7",
@@ -24,6 +25,7 @@
     "express-session": "^1.17.2",
     "grant": "^5.4.21",
     "mongoose": "^6.3.1",
+    "node-cron": "^3.0.1",
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "passport-oauth2": "^1.6.1",

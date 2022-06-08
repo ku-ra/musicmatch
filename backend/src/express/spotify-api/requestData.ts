@@ -21,3 +21,14 @@ export const getArtists = async (accessToken: string, ids: string[]) => {
 
     return null;
 }
+
+export const getUser = async (accessToken: string, id: string) => {
+    const spotifyHandler = SpotifyHandler(accessToken);
+    const response = await spotifyHandler.getUser(id).catch(error => { console.log(error) });
+
+    if (response) {
+        return response.body;
+    }
+
+    return null;
+}

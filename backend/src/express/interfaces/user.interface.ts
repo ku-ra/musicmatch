@@ -9,6 +9,11 @@ export const getAll = async () => {
       return await Users.findAll({ attributes: ['userId', 'username', 'description', 'avatar'] }) as UsersInstance[];
 }
 
+export const getAllSpotify = async () => {
+      return await Users.findAll({ attributes: ['userId', 'username', 'spotifyId', 'avatar'] }) as UsersInstance[];
+}
+
+
 export const getByUsername = async (username: string) => {
       return await Users.findOne({ attributes: ['userId', 'username', 'description', 'avatar'], where: { username: username }}) as UsersInstance;
 }
@@ -31,6 +36,10 @@ export const create = async (values: any) => {
 
 export const updateDescriptionById = async (description: string, userId: number) => {
       return (await Users.update({description: description}, { where: { userId: userId }}))[0]
+}
+
+export const updateSpotify = async (userId: number, avatar: string, username: string) => {
+      return (await Users.update({ username: username, avatar: avatar }, { where: { userId: userId }}))[0];
 }
 
 export const remove = async (userId: number) => {

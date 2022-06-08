@@ -49,8 +49,10 @@ const Search: NextPage = () => {
                 <div className="w-3/5 flex flex-row">
                     {matches && matches.map((match) => {
                         return (
-                        <div className="hover:bg-gradient-to-br px-20 hover:from-purple-100 hover:to-pink-50  cursor-pointer transition-all duration-150 ease-linear w-min h-full flex flex-col text-center space-y-4 py-7 rounded-xl drop-shadow-none bg-white items-center hover:scale-[1.02]">
-                            <UserView avatar={match.User.avatar} country={match.User.country} spotifyUrl={match.User.spotifyUrl} username={match.User.username}></UserView>
+                        <div className="hover:bg-gradient-to-br px-20 hover:from-purple-100 hover:to-pink-50 transition-all duration-150 ease-linear w-min h-full flex flex-col text-center space-y-4 py-7 rounded-xl drop-shadow-none bg-white items-center hover:scale-[1.02]">
+                            <UserView avatar={match.User.avatar} country={match.User.country} spotifyUrl={match.User.spotifyUrl} username={match.User.username} hasDiscord={!!match.User.Discord} hasInstagram={!!match.User.Instagram}></UserView>
+                            { match.User.Discord && <p>{match.User.Discord?.username}#{match.User.Discord?.discriminator}</p> }
+                            { match.User.Instagram && <p>{match.User.Discord?.username}#{match.User.Discord?.discriminator}</p> }
                         </div>)
                     })}
                 </div>

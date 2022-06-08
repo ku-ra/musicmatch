@@ -23,7 +23,12 @@ export const getUsersByArtist = async (artistId: string) => {
         attributes: [],
         include: [
             { 
-                model: sequelize.models.Users, attributes: ['avatar', 'country', 'username', 'spotifyUrl'], 
+                model: sequelize.models.Users, attributes: ['avatar', 'country', 'username', 'spotifyUrl'],
+                include: [
+                    {
+                        model: sequelize.models.Discords, attributes: ['username', 'discriminator']
+                    }
+                ] 
             },
         ]
     })

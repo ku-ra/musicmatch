@@ -41,7 +41,6 @@ const Search = () => {
 
     const handleOnSelect = (item: SearchData) => {
         setInfo(item);
-        console.log(info);
         router.push({ pathname: '/search' });
     }
 

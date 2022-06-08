@@ -9,8 +9,12 @@ export const getAll = async () => {
     return await Artists.findAll({ attributes: ['artistId', 'name', 'image', 'url'] }) as ArtistInstance[];
 }
 
-export const getById = async (artistId: string) => {
-    return await Artists.findOne({ attributes: ['artistId', 'name', 'image', 'url'], where: { artistId: artistId }}) as ArtistInstance;
+export const getAllIds = async () => {
+    return await Artists.findAll({ attributes: ['artistId', 'name', 'image', 'url'] }) as ArtistInstance[];
+}
+
+export const update = async (artistId: string, image: string) => {
+    return await Artists.update({ image: image }, { where: {artistId: artistId} })
 }
 
 export const create = async (artistId: string, name: string, image: string, url: string) => {

@@ -25,7 +25,7 @@ const models = [
 models.forEach((model) => model(sequelize));
 
 (async () => {
-      await sequelize.sync();
+      await sequelize.sync({alter: true});
       //await sequelize.sync({force: true});
 })();
 
@@ -39,6 +39,7 @@ sequelize.models.Users.hasMany(sequelize.models.Matches, { foreignKey: 'secondUs
 sequelize.models.Matches.belongsTo(sequelize.models.Users, { foreignKey: 'firstUserId' });
 sequelize.models.Matches.belongsTo(sequelize.models.Users, { foreignKey: 'secondUserId' });
 
+sequelize.models.Users.hasOne(sequelize.models.Discords, { foreignKey: 'userId'});
 sequelize.models.Discords.belongsTo(sequelize.models.Users, { foreignKey: 'userId' });
 
 sequelize.models.MatchTracks.belongsTo(sequelize.models.Matches, { foreignKey: 'matchId' });
