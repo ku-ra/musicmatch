@@ -2,22 +2,6 @@ import country from 'country-list'
 
 import { FaDiscord, FaInstagram } from 'react-icons/fa';
 
-
-export type UserInfo = {
-    Discord?: DiscordInfo,
-    avatar: string,
-    country: string,
-    spotifyUrl: string,
-    username: string,
-    hasDiscord?: boolean,
-    hasInstagram?: boolean
-}
-
-export type DiscordInfo = {
-    username: string,
-    discriminator: string,
-}
-
 export const convertCountry = (code: string) => {
     const name = country.getName(code);
 
@@ -28,7 +12,7 @@ export const convertCountry = (code: string) => {
     return name;
 }
 
-const UserView = ({ avatar, country, spotifyUrl, username, hasDiscord, hasInstagram }: UserInfo) => {
+const UserView = ({ avatar, country, spotifyUrl, username, Discord, Instagram }: UserInfo) => {
     return ( 
         <>
                <div className="w-20 h-20">
@@ -39,9 +23,9 @@ const UserView = ({ avatar, country, spotifyUrl, username, hasDiscord, hasInstag
                         <h1 className="font-bold text-md">{username}</h1>
                         <p className="font-normal text-xs">{convertCountry(country)}</p>
                     </div>
-                    <div className="flex flex-row w-full space-x-2 items-center justify-center">
-                        { hasDiscord && <FaDiscord size={17} color='#5865F2'></FaDiscord> }
-                        { hasInstagram && <FaInstagram size={17} color='#833AB4'></FaInstagram> }
+                    <div className="flex flex-col w-full space-y-2 items-center justify-center">
+                        { Discord && <div className="flex flex-row w-full space-x-2 items-center justify-center"><FaDiscord size={17} color='#5865F2'></FaDiscord><p className="text-xs font-regular">{Discord?.username}#{Discord?.discriminator}</p></div>}                        
+                        { Instagram && <div className="flex flex-row w-full space-x-2 items-center justify-center"><FaInstagram size={17} color='#833AB4'></FaInstagram><p className="text-xs font-regular">{Instagram?.username}</p></div> }
                     </div>
                 </div>
         </>

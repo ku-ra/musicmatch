@@ -1,9 +1,11 @@
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-import UserView, { UserInfo } from './userinfo';
-import MatchDetail, { MatchData } from './matchDetail';
+import UserView from './UserInfo';
+import MatchDetailed from './MatchDetailed';
+
 import { useState } from 'react';
+import { MatchData } from './types/MatchData';
 
 const MatchThumbnail = ({updatedAt, secondUserId, scoreAverage, scoreArtist, scoreGenre, scoreTrack, MatchArtists, MatchTracks, User}: MatchData) => {
     const [showDetails, setShowDetails] = useState(false);
@@ -16,9 +18,9 @@ const MatchThumbnail = ({updatedAt, secondUserId, scoreAverage, scoreArtist, sco
     return (
         <>
             <div className="pt-4">
-                <MatchDetail showDetails={showDetails} onClick={onClick} key={secondUserId} updatedAt={updatedAt} secondUserId={secondUserId} scoreTrack={scoreTrack} scoreAverage={scoreAverage} scoreGenre={scoreGenre} scoreArtist={scoreArtist} MatchArtists={MatchArtists} MatchTracks={MatchTracks} User={User}></MatchDetail>
+                <MatchDetailed showDetails={showDetails} onClick={onClick} key={secondUserId} updatedAt={updatedAt} secondUserId={secondUserId} scoreTrack={scoreTrack} scoreAverage={scoreAverage} scoreGenre={scoreGenre} scoreArtist={scoreArtist} MatchArtists={MatchArtists} MatchTracks={MatchTracks} User={User}></MatchDetailed>
                 <div onClick={onClick} className="hover:bg-gradient-to-br px-20 hover:from-purple-100 hover:to-pink-50  cursor-pointer transition-all duration-150 ease-linear w-full h-full flex flex-col text-center space-y-4 px-20 py-7 rounded-xl drop-shadow-none bg-white items-center hover:scale-[1.02]">
-                    <UserView avatar={User.avatar} country={User.country} spotifyUrl={User.spotifyUrl} username={User.username} hasDiscord={!!User.Discord} hasInstagram={!!User.Instagram}></UserView>
+                    <UserView avatar={User.avatar} country={User.country} spotifyUrl={User.spotifyUrl} username={User.username} Discord={User.Discord}></UserView>
                 </div>
             </div>
         </>

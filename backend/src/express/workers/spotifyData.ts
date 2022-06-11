@@ -9,6 +9,7 @@ import * as Users from '../interfaces/user.interface';
 
 import { getArtists, getTracks, getUser } from '../spotify-api/requestData';
 import { clientToken } from '../spotify-api/handleTokens';
+import { ArtistInstance } from '../../sequelize/models/artist.model';
 
 export const update = async () => {
     const token = await clientToken();
@@ -21,33 +22,43 @@ export const update = async () => {
     const tracks = await Tracks.getAll(); 
     const users = await Users.getAllSpotify();
 
-    artists.forEach(artist => { updateArtist(artist.artistId, artist, token)
-    .then((changed) => {
-        if (changed) { 
-            Artists.update(artist.artistId, artist.image) 
-        }
-    })});
+    updateArtists(artists, token);
 
-    users.forEach(user => { updateUser(user.spotifyId, user, token)
-    .then((changed) => {
-        if (changed) {
-            Users.updateSpotify(user.userId, user.avatar, user.username);
-        }
-    })});
+    users.forEach(user => { 
+        setTimeout(() => {
+            updateUser(user.spotifyId, user, token).then((changed) => {
+                if (changed) {
+                    Users.updateSpotify(user.userId, user.avatar, user.username);
+                }
+            });
+        }, 100);
+    });
 }
 
+const updateArtists = async (artists: ArtistInstance[], token: string) => {
+    const artistIds = artists.map((artist) => artist.artistId);
+    const apiLimit = 50;
 
+    console.log(`Updating ${artistIds.length} Artists`);
 
-const updateArtist = async (id: string, data: any, token: string) => {
-    const updated = (await getArtists(token, [id]));
-    const image = updated?.at(0)?.images[0].url;
+    for (let i = 0; i < artistIds.length; i += apiLimit) {
+        const ids = artistIds.slice(i, i + apiLimit);
+        const updated = await getArtists(token, ids);
+
+        artists.forEach((artist) => {
+            const updatedData = updated?.find(x => x.id == artist.artistId);
+            const image = updatedData?.images[0].url;
     
-    if (image != null && data.image !== image) {
-        data.image = image;
-        return true;
-    }
+            if (image != null && image !== artist.image) {
+                Artists.update(artist.artistId, image);
+            }
+        });
 
-    return false;
+        console.log(`Updated Artists: ${apiLimit}`);
+
+        //Sleep 10 Seconds to avoid rate limits
+        await new Promise(r => setTimeout(r, 10000));
+    }
 }
 
 const updateTrack = async (id: string, data: any, token: string) => {

@@ -8,6 +8,7 @@ import * as Discord from './routes/discord.route';
 import * as Data from './routes/data.route';
 import * as Analyse from './routes/analyse.route';
 import * as Discords from './interfaces/discord.interface';
+import * as Auth from './routes/auth.route';
 
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
@@ -31,7 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(cookieParser());
-app.use(expressSession({ secret: 'cunny', resave: false, saveUninitialized: true }));
+app.use(expressSession({ secret: '0x92af82218337100abb819a', resave: false, saveUninitialized: true }));
 
 app.use(cors({
     origin: config.HOME, // allow to server to accept request from different origin
@@ -42,12 +43,6 @@ app.use(cors({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-app.get('/', (req, res) => {
-	res.send(`
-		
-      `);
-});
 
 app.get(
       '/auth/spotify', 
@@ -65,7 +60,11 @@ app.get(
 
 app.get(
   '/auth/spotify/callback',
-  passport.authenticate('spotify', { successRedirect: config.HOME, failureRedirect: config.HOME })
+  passport.authenticate('spotify', { failureRedirect: config.HOME }),
+  Analyse.analyseUser,
+  (req: Request, res: Response) => {
+    res.redirect(config.HOME);
+  }
 );
 
 app.get(
@@ -91,17 +90,11 @@ app.get(
   Discord.callback
 )
 
-app.get(
-  '/analyse/collect', 
+app.post(
+  '/auth/delete',
   Spotify.isAuthenticated,
-  Analyse.analyseUser,
-);
-
-app.get(
-  '/analyse/match', 
-  Spotify.isAuthenticated,
-  Analyse.matchUser,
-);
+  Auth.remove
+)
 
 app.post(
   '/analyse/get', 

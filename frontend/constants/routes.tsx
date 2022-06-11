@@ -2,6 +2,7 @@ export const server = 'http://localhost:8001';
 
 export const spotify_auth_api = server + '/auth/spotify';
 export const discord_auth_api = server + '/auth/discord';
+export const delete_auth_api = server + '/auth/delete';
 
 export const is_auth_api = server + '/auth';
 

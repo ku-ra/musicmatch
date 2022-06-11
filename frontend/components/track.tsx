@@ -1,4 +1,4 @@
-import { RoundedImageSmall } from "./roundedImage";
+import { RoundedImageSmall } from "./RoundedImage";
 
 export type TrackInfo = {
     artist: string,

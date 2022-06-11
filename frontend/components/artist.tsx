@@ -1,12 +1,6 @@
 import { Tooltip } from '@mui/material';
-import { RoundedImageBig } from './roundedImage';
-
-export type ArtistInfo = {
-    artistId?: string,
-    name: string,
-    image: string,
-    url: string
-}
+import { RoundedImageBig } from './RoundedImage';
+import { ArtistInfo } from './types/Artist';
 
 const Artist = ({name, image, url}: ArtistInfo) => {
     return (

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { get_match_api } from '../constants/routes' 
-import { MatchData } from './matchDetail';
+import { MatchData } from './types/MatchData';
 
 import Client from '../client/axios';
-import MatchThumbnail from './matchThumbnail';
+import MatchThumbnail from './MatchThumbnail';
 
 
 const Match = () => {
@@ -28,50 +28,9 @@ const Match = () => {
             {
                 matches.map((match, index) => {
                     return (
-                        <>
                         <MatchThumbnail key={index} MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
                                         scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
                                         scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                                <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                                        scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                                        scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                                <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                                        scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                                        scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                        <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                                        scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                                        scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                                <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                                        scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                                        scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                        <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                                        scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                                        scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                                <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                                        scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                                        scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                            <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                            <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                            <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                                                    <MatchThumbnail MatchTracks={match.MatchTracks} MatchArtists={match.MatchArtists} User={match.User}
-                            scoreArtist={match.scoreArtist} scoreAverage={match.scoreAverage} scoreGenre={match.scoreGenre}
-                            scoreTrack={match.scoreTrack} secondUserId={match.secondUserId} updatedAt={match.updatedAt} />
-                            </>
                     )
                 })
             }

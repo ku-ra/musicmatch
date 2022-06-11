@@ -1,13 +1,16 @@
 import type { NextPage } from 'next'
-import Auth from '../components/authSpotify'
-import Client from '../client/axios'
-import { get_match_api, server } from '../constants/routes'
+import { get_match_api } from '../constants/routes'
 import { hasDiscord, isAuthenticated } from '../context/userContext'
-import Match from '../components/match'
-import DiscordAuth from '../components/authDiscord'
-import MatchDetail, { MatchData } from '../components/matchDetail'
 import { useEffect, useState } from 'react'
-import Search from '../components/search'
+import { MatchData } from '../components/types/MatchData'
+
+import Auth from '../components/AuthSpotify'
+import Client from '../client/axios'
+import Match from '../components/Match'
+import DiscordAuth from '../components/AuthDiscord'
+import MatchDetail from '../components/MatchDetailed'
+import Search from '../components/Search'
+import DeleteButton from '../components/DeleteButton'
 
 const Home: NextPage = () => {
   const [page, setPage] = useState(0);
@@ -24,7 +27,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
       fetchMatches();
-  }, [])
+  }, []);
   
   if (!isAuthenticated()) {
     return (
@@ -60,6 +63,9 @@ const Home: NextPage = () => {
           <Search></Search>
           <div className="grid grid-cols-3 gap-8 p-4 ">
             <Match></Match>
+          </div>
+          <div className="pt-32 text-center">
+            <DeleteButton></DeleteButton>
           </div>
         </div>
       </div>

@@ -1,7 +1,3 @@
-import axios from 'axios';
-import Router from 'next/router';
-import qs from 'qs';
-
 import { discord_auth_api } from '../constants/routes';
 
 const DiscordAuth = () => {

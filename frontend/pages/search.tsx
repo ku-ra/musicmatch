@@ -1,14 +1,12 @@
+import Client from '../client/axios';
+import UserView from '../components/UserInfo';
+
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router';
 import { useContext, useEffect, useState } from 'react'
-import Client from '../client/axios';
-import UserView, { UserInfo } from '../components/userinfo';
 import { get_user_artists_api } from '../constants/routes';
 import { searchContext } from '../context/searchContext'
-
-type SearchResult = {
-    User: UserInfo
-}
+import { SearchResult } from '../components/types/SearchResult';
 
 const Search: NextPage = () => {
     const router = useRouter();
@@ -33,6 +31,11 @@ const Search: NextPage = () => {
     }, [])
 
     return <>
+        <a href="/">
+            <h1 className="absolute top-5 left-10 text-2xl font-bold text-black">
+                ❮
+            </h1>
+        </a>
         <div className="flex p-16">
             <div className="w-full h-full flex flex-col justify-center items-center space-y-16">
                 <div className="w-full flex flex-row space-x-6 justify-center">
@@ -50,9 +53,7 @@ const Search: NextPage = () => {
                     {matches && matches.map((match) => {
                         return (
                         <div className="hover:bg-gradient-to-br px-20 hover:from-purple-100 hover:to-pink-50 transition-all duration-150 ease-linear w-min h-full flex flex-col text-center space-y-4 py-7 rounded-xl drop-shadow-none bg-white items-center hover:scale-[1.02]">
-                            <UserView avatar={match.User.avatar} country={match.User.country} spotifyUrl={match.User.spotifyUrl} username={match.User.username} hasDiscord={!!match.User.Discord} hasInstagram={!!match.User.Instagram}></UserView>
-                            { match.User.Discord && <p>{match.User.Discord?.username}#{match.User.Discord?.discriminator}</p> }
-                            { match.User.Instagram && <p>{match.User.Discord?.username}#{match.User.Discord?.discriminator}</p> }
+                            <UserView avatar={match.User.avatar} country={match.User.country} spotifyUrl={match.User.spotifyUrl} username={match.User.username} Discord={match.User.Discord}></UserView>
                         </div>)
                     })}
                 </div>

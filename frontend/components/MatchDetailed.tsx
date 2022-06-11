@@ -1,52 +1,14 @@
-import { MouseEventHandler, useEffect, useState } from 'react'
-import { get_match_api } from '../constants/routes' 
-
-import User, { convertCountry, UserInfo } from './userinfo';
-import Client from '../client/axios';
-
-import { FaDiscord, FaInstagram } from 'react-icons/fa';
-
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { FaDiscord, FaInstagram } from 'react-icons/fa';
 
-import { Tooltip } from '@mui/material'
-import Track from './track';
-import Artist, { ArtistInfo } from './artist';
+import Track from './Track';
+import Artist from './Artist';
+import { convertCountry } from './UserInfo';
 
-export type MatchData = {
-    scoreArtist: number,
-    scoreGenre: number,
-    scoreTrack: number,
-    scoreAverage: number,
+import { MatchData } from './types/MatchData';
 
-    secondUserId: number,
-    User: UserInfo,
-    MatchTracks: MatchTrack[],
-    MatchArtists: MatchArtist[],
-
-    updatedAt: Date,
-    showDetails?: boolean,
-    onClick?: MouseEventHandler<HTMLDivElement>
-}
-
-type MatchTrack = {
-    updatedAt: Date,
-    Track: TrackInfo,
-}
-
-type TrackInfo = {
-    artists: string[],
-    image: string,
-    name: string,
-    url: string,
-}
-
-type MatchArtist = {
-    updatedAt: Date,
-    Artist: ArtistInfo,
-}
-
-const MatchDetail = ({secondUserId, scoreAverage, User, MatchTracks, MatchArtists, updatedAt, showDetails, onClick}: MatchData) => {
+const MatchDetailed = ({secondUserId, scoreAverage, User, MatchTracks, MatchArtists, updatedAt, showDetails, onClick}: MatchData) => {
     return ( <> 
         { showDetails &&  (
             <div>
@@ -84,14 +46,21 @@ const MatchDetail = ({secondUserId, scoreAverage, User, MatchTracks, MatchArtist
                         Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor.
                         </p>
                         <div className="flex flex-row justify-center">
-                            <div className="flex flex-row w-full space-x-3 items-center">
-                                <FaDiscord size={19} color='#5865F2'></FaDiscord>
-                                <p className="text-xs font-medium text-slate-900">kura#5555</p>
-                            </div>
-                            <div className="flex flex-row w-full space-x-3 items-center">
-                                <FaInstagram size={19} color='#833AB4'></FaInstagram>
-                                <p className="text-xs font-medium text-slate-900">kura#5555</p>
-                            </div>
+                            {
+                                User.Discord &&
+                                <div className="flex flex-row w-full space-x-3 items-center">
+                                    <FaDiscord size={19} color='#5865F2'></FaDiscord>
+                                    <p className="text-xs font-medium text-slate-900">{User.Discord.username}#{User.Discord.discriminator}</p>
+                                </div>
+                            }
+                            {
+                                User.Instagram &&
+                                <div className="flex flex-row w-full space-x-3 items-center">
+                                    <FaInstagram size={19} color='#833AB4'></FaInstagram>
+                                    <p className="text-xs font-medium text-slate-900">kura#5555</p>
+                                </div>
+                            }
+
                         </div>
                     </div>
 
@@ -127,4 +96,4 @@ const MatchDetail = ({secondUserId, scoreAverage, User, MatchTracks, MatchArtist
     )
 }
 
-export default MatchDetail;
+export default MatchDetailed;

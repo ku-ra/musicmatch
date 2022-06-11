@@ -7,7 +7,7 @@ import type { AppProps } from 'next/app'
 import { useEffect, useState } from 'react'
 import Client from '../client/axios';
 import { is_auth_api } from '../constants/routes';
-import { SearchData } from '../components/search'
+import { SearchData } from '../components/Search'
 
 function MyApp({ Component, pageProps }: AppProps) {
 

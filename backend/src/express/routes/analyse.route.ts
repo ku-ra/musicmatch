@@ -74,12 +74,8 @@ export const seenMatch = async (req: Request, res: Response) => {
     return res.status(200);
 }
 
-export const matchUser = async (req: Request, res: Response) => {
-    if (!req.user) {
-        return res.sendStatus(403);
-    }
-
-    const matches = await findMatches(req.user.userId);
+const matchUser = async (userId: number) => {
+    const matches = await findMatches(userId);
 
     matches.matches.forEach((match) => {
         Matches.createOrUpdate(matches.userId, match.matchUserId, match.infoArtists, match.infoGenres, match.infoTracks, match.matchOverall, match.matchArtist, match.matchGenre, match.matchTrack).then(matchEntry => {
@@ -96,75 +92,74 @@ export const matchUser = async (req: Request, res: Response) => {
             console.log(error);
         })
     })
-
-    return res.status(200).json(matches);
 }
 
-export const analyseUser = async (req: Request, res: Response) => {
+export const analyseUser = async (req: Request, res: Response, next: Function) => {
     if (!req.user) {
-        return res.sendStatus(403);
+        return;
     }
     
     const user = await Users.getById(req.user.userId);
 
     if (!user) {
-        return res.sendStatus(500);
+        return next();
     }
 
     const accessToken = await refreshToken(user.spotifyRefreshToken);
 
     if (!accessToken) {
-        return res.sendStatus(500);
+        return next();
     }
 
     const entry = await SpotifyData.getByUserId(req.user.userId);
 
-    if (entry && moment(new Date()).diff(moment(entry.updatedAt), 'minutes') < 1) {
-        return res.sendStatus(429);
+    if (entry && moment(new Date()).diff(moment(entry.updatedAt), 'hours') < 12) {
+        return next();
     }
 
     const data = await analyseData(accessToken);
 
     if (!data) {
-        return res.sendStatus(500);
+        return next();
     }
 
-    const tracks = await insertTracks(data.tracks);
-    const artists = await insertArtists(data.artists);
+    await insertTracks(data.tracks);
+    await insertArtists(data.artists);
 
     if (!entry) {
         const row = await SpotifyData.create({userId: req.user.userId, tracks: data.tracks, artists: data.artists, genres: data.genres});
 
-        if (row) {
-            return res.sendStatus(201);
+        if (!row) {
+            return next();
         }
+        
+    } else {
+        const updated = await SpotifyData.update(req.user.userId, data.genres, data.tracks, data.artists);
 
-        return res.sendStatus(500);
+        if (!updated) {
+            return next();
+        }
     }
 
-    const updated = await SpotifyData.update(req.user.userId, data.genres, data.tracks, data.artists);
+    matchUser(req.user.userId);
 
-    if (!updated) {
-        return res.sendStatus(500);
-    }
-
-    return res.sendStatus(201);
+    next();
 }
 
-const insertTracks = async (tracks: string[]) => {
+const insertTracks = async (trackIds: string[]) => {
     const token = await clientToken();
 
     if (!token) {
         return false;
     }
 
-    const data = await getTracks(token, tracks)
+    const tracks = await getTracks(token, trackIds)
 
-    if (!data) {
+    if (!tracks) {
         return false;
     }
 
-    data.forEach(track => {
+    tracks.forEach(track => {
         const artists = track.artists.map(artist => { return artist.name });
         Tracks.create(track.id, track.name, track.album.images[0].url, artists, track.uri)
         .catch(error => {
@@ -175,20 +170,20 @@ const insertTracks = async (tracks: string[]) => {
     return true;
 }
 
-const insertArtists = async (artists: string[]) => {
+const insertArtists = async (artistIds: string[]) => {
     const token = await clientToken();
 
     if (!token) {
         return false;
     }
 
-    const data = await getArtists(token, artists)
+    const artists = await getArtists(token, artistIds)
 
-    if (!data) {
+    if (!artists) {
         return false;
     }
 
-    data.forEach(artist => {
+    artists.forEach(artist => {
         Artists.create(artist.id, artist.name, artist.images[0].url, artist.uri)
         .catch(error => {
             console.log(error);

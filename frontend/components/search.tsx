@@ -5,7 +5,7 @@ import { ReactSearchAutocomplete } from 'react-search-autocomplete'
 import Client from '../client/axios'
 import { data_artists_api } from '../constants/routes'
 import { searchContext } from '../context/searchContext'
-import { RoundedImageSmall } from './roundedImage'
+import { RoundedImageSmall } from './RoundedImage'
 
 export type SearchData = {
     artistId: string,

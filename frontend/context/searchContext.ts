@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { ArtistInfo } from '../components/artist';
+import { ArtistInfo } from '../components/types/Artist';
 
 export type SearchContext = {
     info: ArtistInfo,
