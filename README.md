@@ -27,7 +27,7 @@ First personal full stack project using PostgreSQL, Express.js, React.js and Nod
 
 #### Demo of current status
 
-![](https://github.com/ku-ra/musicmatch/blob/main/docs/demo.gif?raw=true)
+![](https://github.com/ku-ra/musicmatch/blob/main/docs/musicmatch.gif?raw=true)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
