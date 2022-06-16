@@ -4,7 +4,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ku-ra/kuromi">
-    <img src="https://i.imgur.com/yCy93FH.png" alt="Logo" width="80" height="80">
+    <img src="https://i.imgur.com/He7sQUe.png" alt="Logo" height="80">
   </a>
 
 <h3 align="center">MusicMatch</h3>
@@ -27,7 +27,7 @@ First personal full stack project using PostgreSQL, Express.js, React.js and Nod
 
 #### Demo of current status
 
-![](https://github.com/ku-ra/kuromi/blob/main/docs/demo.gif?raw=true)
+![](https://github.com/ku-ra/musicmatch/blob/main/docs/demo.gif?raw=true)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
